@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/popup_checklist_page.dart';
 import '../widgets/card_checklist.dart';
 import '../models/checklist_card_data.dart';
 
@@ -23,6 +24,15 @@ class _PlanningPageState extends State<PlanningPage> {
               itemBuilder: (context, index) {
                 return CardChecklist(
                   checkTitle: carddata.checklistData[index],
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PopupChecklistPage(
+                            title: carddata.checklistData[index]),
+                      ),
+                    );
+                  },
                 );
               },
             ),

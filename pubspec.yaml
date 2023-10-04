@@ -29,4 +29,5 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/task-icons/
     - assets/card-images/
