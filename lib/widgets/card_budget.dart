@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planner/app_style.dart';
+import '../app_style.dart';
 
 class CardBudget extends StatefulWidget {
   const CardBudget({super.key});

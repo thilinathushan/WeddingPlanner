@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:planner/pages/dashboard_page.dart';
-import 'package:planner/pages/onboarding_page.dart';
+import 'pages/dashboard_page.dart';
+import 'pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool? seenOnboard;

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../app_style.dart';
+import '/app_style.dart';
 
-class CardGuest extends StatefulWidget {
-  const CardGuest({super.key});
+class CardChecklist extends StatelessWidget {
+  final String checkTitle;
 
-  @override
-  State<CardGuest> createState() => _CardGuestState();
-}
+  const CardChecklist({
+    super.key,
+    required this.checkTitle,
+  });
 
-class _CardGuestState extends State<CardGuest> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +19,7 @@ class _CardGuestState extends State<CardGuest> {
       ),
       child: Container(
         width: double.infinity,
-        height: 150,
+        height: 120,
         decoration: const BoxDecoration(
           color: kPrimaryGray,
           borderRadius: BorderRadius.all(
@@ -27,27 +27,35 @@ class _CardGuestState extends State<CardGuest> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Column(
+              Image.asset(
+                "assets/card-images/guests-card.png",
+                width: 120.0,
+                height: 120.0,
+              ),
+              const SizedBox(
+                width: 20.0,
+              ),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Guests",
-                    style: TextStyle(
+                    checkTitle,
+                    style: const TextStyle(
                       color: kPrimaryBlue,
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
@@ -69,34 +77,7 @@ class _CardGuestState extends State<CardGuest> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Confirmed:",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        "80",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
-              ),
-              Image.asset(
-                "assets/card-images/guests-card.png",
-                width: 120.0,
-                height: 120.0,
               ),
             ],
           ),

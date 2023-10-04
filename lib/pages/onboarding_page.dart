@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:planner/app_style.dart';
-import 'package:planner/pages/dashboard_page.dart';
-import 'package:planner/size_config.dart';
-import 'package:planner/widgets/onboarding_nav_button.dart';
+import '../app_style.dart';
+import 'dashboard_page.dart';
+import '../size_config.dart';
+import '../widgets/onboarding_nav_button.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:planner/main.dart';
-import 'package:planner/models/onboarding_data.dart';
-
-//import './pages.dart';
-//import '../widgets/widgets.dart';
+import '../main.dart';
+import '../models/onboarding_data.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);

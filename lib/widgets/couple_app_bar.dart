@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CoupleAppBar extends StatelessWidget {
+class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CoupleAppBar({super.key});
 
   @override
@@ -81,4 +81,10 @@ class CoupleAppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size(
+        double.maxFinite,
+        100,
+      );
 }
