@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_style.dart';
+import '../size_config.dart';
 
 class CardGuest extends StatefulWidget {
   const CardGuest({super.key});
@@ -11,15 +12,20 @@ class CardGuest extends StatefulWidget {
 class _CardGuestState extends State<CardGuest> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double screenWidth = SizeConfig.screenWidth!;
+    double useableSizeVertical = SizeConfig.useableBlockSizeVertical!;
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
         top: 10.0,
         right: 10.0,
+        bottom: 15.0,
       ),
       child: Container(
-        width: double.infinity,
-        height: 150,
+        width: screenWidth,
+        height: useableSizeVertical * 23,
         decoration: const BoxDecoration(
           color: kPrimaryGray,
           borderRadius: BorderRadius.all(

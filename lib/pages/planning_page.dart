@@ -20,6 +20,10 @@ class _PlanningPageState extends State<PlanningPage> {
         children: [
           Expanded(
             child: ListView.builder(
+              padding: const EdgeInsets.only(
+                top: 15.0,
+                bottom: 15.0,
+              ),
               itemCount: carddata.checklistData.length,
               itemBuilder: (context, index) {
                 return CardChecklist(

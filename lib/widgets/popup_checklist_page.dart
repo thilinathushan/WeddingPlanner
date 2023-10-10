@@ -21,11 +21,13 @@ class _PopupChecklistPageState extends State<PopupChecklistPage> {
         foregroundColor: kPrimaryBlack,
         title: Text(widget.title),
         forceMaterialTransparency: true,
+        iconTheme: const IconThemeData(color: kPrimaryBlue),
       ),
       body: const Center(
         child: Text("Data"),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryBlue,
         onPressed: () {
           Navigator.push(
             context,

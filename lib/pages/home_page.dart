@@ -11,9 +11,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 5.0,
-        ),
         Expanded(
           child: ListView(
             children: const [

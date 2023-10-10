@@ -33,50 +33,54 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavBar = BottomNavigationBar(
+      selectedLabelStyle: const TextStyle(
+        color: kPrimaryBlue,
+        fontSize: 15,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: kDarkGray,
+        fontSize: 15,
+      ),
+      currentIndex: _selectedIndex,
+      onTap: _navigateBottomBar,
+      type: BottomNavigationBarType.fixed,
+      items: [
+        BottomNavigationBarItem(
+            icon: Image.asset('assets/icons/home.png',
+                height: 30,
+                color: _selectedIndex == 0 ? kPrimaryBlue : kDarkGray),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: Image.asset('assets/icons/to-do-list.png',
+                height: 30,
+                color: _selectedIndex == 1 ? kPrimaryBlue : kDarkGray),
+            label: "Planning"),
+        BottomNavigationBarItem(
+            icon: Image.asset('assets/icons/budget.png',
+                height: 30,
+                color: _selectedIndex == 2 ? kPrimaryBlue : kDarkGray),
+            label: "Budget"),
+        BottomNavigationBarItem(
+            icon: Image.asset('assets/icons/guests.png',
+                height: 30,
+                color: _selectedIndex == 3 ? kPrimaryBlue : kDarkGray),
+            label: "Guests"),
+        BottomNavigationBarItem(
+            icon: Image.asset('assets/icons/store.png',
+                height: 30,
+                color: _selectedIndex == 4 ? kPrimaryBlue : kDarkGray),
+            label: "Vendors"),
+      ],
+    );
+
+    
+    // final bottomNavBarSize = MediaQuery.of(context).size.height - bottomNavBar.;
     return SafeArea(
       child: Scaffold(
         appBar: const CoupleAppBar(),
         body: pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: const TextStyle(
-            color: kPrimaryBlue,
-            fontSize: 15,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            color: kDarkGray,
-            fontSize: 15,
-          ),
-          currentIndex: _selectedIndex,
-          onTap: _navigateBottomBar,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/home.png',
-                    height: 30,
-                    color: _selectedIndex == 0 ? kPrimaryBlue : kDarkGray),
-                label: "Home"),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/to-do-list.png',
-                    height: 30,
-                    color: _selectedIndex == 1 ? kPrimaryBlue : kDarkGray),
-                label: "Planning"),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/budget.png',
-                    height: 30,
-                    color: _selectedIndex == 2 ? kPrimaryBlue : kDarkGray),
-                label: "Budget"),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/guests.png',
-                    height: 30,
-                    color: _selectedIndex == 3 ? kPrimaryBlue : kDarkGray),
-                label: "Guests"),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/store.png',
-                    height: 30,
-                    color: _selectedIndex == 4 ? kPrimaryBlue : kDarkGray),
-                label: "Vendors"),
-          ],
-        ),
+        bottomNavigationBar: bottomNavBar,
       ),
     );
   }

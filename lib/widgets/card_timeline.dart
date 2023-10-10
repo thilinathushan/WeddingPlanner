@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_style.dart';
+import '../size_config.dart';
 
 class CardTimeLine extends StatefulWidget {
   const CardTimeLine({super.key});
@@ -11,15 +12,19 @@ class CardTimeLine extends StatefulWidget {
 class _CardTimeLineState extends State<CardTimeLine> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double screenWidth = SizeConfig.screenWidth!;
+    double useableSizeVertical = SizeConfig.useableBlockSizeVertical!;
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 10.0,
-        top: 10.0,
+        top: 15.0,
         right: 10.0,
       ),
       child: Container(
-        width: double.infinity,
-        height: 150,
+        width: screenWidth,
+        height: useableSizeVertical * 23,
         decoration: const BoxDecoration(
           color: kPrimaryGray,
           borderRadius: BorderRadius.all(

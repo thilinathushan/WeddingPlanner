@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../size_config.dart';
 import '/app_style.dart';
 
 class CardChecklist extends StatelessWidget {
@@ -13,6 +14,10 @@ class CardChecklist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double screenWidth = SizeConfig.screenWidth!;
+    double useableSizeVertical = SizeConfig.useableBlockSizeVertical!;
+
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -22,8 +27,8 @@ class CardChecklist extends StatelessWidget {
           right: 10.0,
         ),
         child: Container(
-          width: double.infinity,
-          height: 120,
+          width: screenWidth,
+          height: useableSizeVertical * 20,
           decoration: const BoxDecoration(
             color: kPrimaryGray,
             borderRadius: BorderRadius.all(
