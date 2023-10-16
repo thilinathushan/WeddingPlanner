@@ -13,19 +13,34 @@ const Color kPrimaryGray = Color(0xffE8E9EB);
 const Color kPrimaryBlue = Color(0xff3772FF);
 const Color kPrimaryBlack = Color(0xff080708);
 
+const Color gBColor = Color(0xFF031888);
+const Color lightText = Color.fromARGB(255, 147, 147, 214);
+const Color highlightText = Color(0xFFEF1F75);
+const Color secoundGb = Color(0xFFDCDCDC);
+
+final maxTitileSize = SizeConfig.blockSizeHorizontal! * 8;
+final maxSubtitileSize = SizeConfig.blockSizeHorizontal! * 4;
+final maxBtntitileSize = SizeConfig.blockSizeHorizontal! * 5.5;
+
 final kTitleOnboarding = GoogleFonts.roboto(
-  fontSize: SizeConfig.blockSizeHorizontal! * 8,
+  fontSize: maxTitileSize >= 40
+      ? SizeConfig.blockSizeHorizontal! * 5
+      : SizeConfig.blockSizeHorizontal! * 8,
   color: kDarkGray,
   fontWeight: FontWeight.bold,
 );
 
 final kSubtitleOnboarding = GoogleFonts.inter(
-  fontSize: SizeConfig.blockSizeHorizontal! * 4,
+  fontSize: maxSubtitileSize >= 30
+      ? SizeConfig.blockSizeHorizontal! * 2
+      : SizeConfig.blockSizeHorizontal! * 4,
   color: kDarkGray,
 );
 
 final kTextButton = GoogleFonts.inter(
   color: kYellowColor,
-  fontSize: SizeConfig.blockSizeHorizontal! * 5.5,
+  fontSize: maxBtntitileSize >= 35
+      ? SizeConfig.blockSizeHorizontal! * 2.5
+      : SizeConfig.blockSizeHorizontal! * 5.5,
   fontWeight: FontWeight.bold,
 );

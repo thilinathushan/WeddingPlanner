@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:planner/pages/auth/social_login.dart';
 import '../app_style.dart';
-import 'dashboard_page.dart';
 import '../size_config.dart';
 import '../widgets/onboarding_nav_button.dart';
 
@@ -177,8 +177,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const DashboardPage(),
+                                      builder: (context) => const SocialLogin(),
                                     ),
                                   );
                                 },

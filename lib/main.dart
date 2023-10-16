@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'pages/dashboard_page.dart';
-import 'pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:planner/firebase_options.dart';
+import 'components/auth/auth_page.dart';
+import 'pages/onboarding_page.dart';
 
 bool? seenOnboard;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -32,8 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Wedding Planner',
-      home:
-          seenOnboard == true ? const DashboardPage() : const OnboardingPage(),
+      home: seenOnboard == true ? const AuthPage() : const OnboardingPage(),
     );
   }
 }

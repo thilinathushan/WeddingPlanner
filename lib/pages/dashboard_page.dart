@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planner/app_style.dart';
+import 'package:planner/components/app_drawer.dart';
 import 'budget_page.dart';
 import 'guest_page.dart';
 import 'home_page.dart';
@@ -74,12 +75,12 @@ class _DashboardPageState extends State<DashboardPage> {
       ],
     );
 
-    
     // final bottomNavBarSize = MediaQuery.of(context).size.height - bottomNavBar.;
     return SafeArea(
       child: Scaffold(
         appBar: const CoupleAppBar(),
         body: pages[_selectedIndex],
+        drawer: const AppDrawer(),
         bottomNavigationBar: bottomNavBar,
       ),
     );

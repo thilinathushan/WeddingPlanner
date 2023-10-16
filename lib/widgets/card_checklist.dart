@@ -39,7 +39,7 @@ class CardChecklist extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   "assets/card-images/guests-card.png",

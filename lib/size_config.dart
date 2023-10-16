@@ -13,8 +13,10 @@ class SizeConfig {
   static double? useableScreenHeight;
   static double? useableBlockSizeVertical;
   static double? appbars;
+  static double? appDrawerSize;
   // static double? bottomNavBar;
   final coupleAppbar = const CoupleAppBar();
+
   // final bottomNavBar = bottomNavigationBar;
 
   void init(BuildContext context) {
@@ -28,5 +30,6 @@ class SizeConfig {
     appbars = appbarSize! + bottomNavBarSize!;
     useableScreenHeight = screenHeight! - appbars!;
     useableBlockSizeVertical = useableScreenHeight! / 100;
+    appDrawerSize = blockSizeHorizontal! * 75;
   }
 }
