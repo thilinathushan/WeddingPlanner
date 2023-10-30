@@ -80,7 +80,7 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Scaffold(
         appBar: const CoupleAppBar(),
         body: pages[_selectedIndex],
-        drawer: const AppDrawer(),
+        drawer: AppDrawer(),
         bottomNavigationBar: bottomNavBar,
       ),
     );

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CoupleAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final firstName = user?.displayName?.split(' ')[0];
+    final profilePictureUrl = user?.photoURL;
+    const userProfile = 'assets/icons/man.png';
+    // if(firstName==null){}
+
     return Container(
       width: double.infinity,
       height: 100.0,
@@ -27,22 +34,35 @@ class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 50.0,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.blue,
+                SizedBox(
+                  width: 50, // Adjust the width as needed
+                  height: 50, // Adjust the height as needed
+                  child: ClipOval(
+                    child: profilePictureUrl != null
+                        ? Image.network(
+                            profilePictureUrl,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            userProfile,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("Thilina",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    )),
+                Text(
+                  firstName ?? "Your Name",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),

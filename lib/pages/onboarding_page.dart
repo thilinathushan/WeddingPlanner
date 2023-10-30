@@ -5,8 +5,8 @@ import '../app_style.dart';
 import '../size_config.dart';
 import '../widgets/onboarding_nav_button.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-import '../main.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import '../main.dart';
 import '../models/onboarding_data.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -35,11 +35,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-  Future setSeenOnboarding() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    seenOnboard = await prefs.setBool('seenOnboard', true);
-    //this will set seenOnboard to true when running onboarding page for the first time.
-  }
+  // Future setSeenOnboarding() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   seenOnboard = await prefs.setBool('seenOnboard', true);
+  //   //this will set seenOnboard to true when running onboarding page for the first time.
+  // }
 
   @override
   void initState() {

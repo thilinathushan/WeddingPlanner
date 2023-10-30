@@ -1,14 +1,21 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import '../pages/auth/social_login_second.dart';
 import '../app_style.dart';
 import '../size_config.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  AppDrawer({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final user = FirebaseAuth.instance.currentUser;
 
   //logout user
-  void logout() {
-    FirebaseAuth.instance.signOut();
+  void logout() async {
+    await auth.signOut();
+    await GoogleSignIn().signOut();
   }
 
   @override
@@ -67,8 +74,15 @@ class AppDrawer extends StatelessWidget {
                   style: TextStyle(fontSize: 15.0),
                 ),
                 onTap: () {
-                  Navigator.pop(context);
                   logout();
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SocialLoginSecond(),
+                    ),
+                  );
+                  // Redirect to the login page
                 },
               ),
             ),

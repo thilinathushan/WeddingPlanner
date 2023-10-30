@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './size_config.dart';
 
-const Color kPinkColor = Color(0xffE83F6F);
+const Color kPinkColor = Color(0xFFE83F6F);
 const Color kYellowColor = Color(0xffFFBF00);
 const Color kDarkWhiteColor = Color(0xffEBEDF1);
 const Color kBlackColor = Color(0xff172B4D);

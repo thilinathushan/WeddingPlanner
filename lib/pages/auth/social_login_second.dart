@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import '../onboard_details/personal_details.dart';
-import '../../services/auth_services.dart';
-import '../../components/auth/social_signin.dart';
+import '../dashboard_page.dart';
 import '../../app_style.dart';
+import '../../components/auth/social_signin.dart';
+import '../../services/auth_services.dart';
 import '../../size_config.dart';
 
-class SocialLogin extends StatefulWidget {
-  const SocialLogin({super.key});
+class SocialLoginSecond extends StatefulWidget {
+  const SocialLoginSecond({super.key});
 
   @override
-  State<SocialLogin> createState() => _SocialLoginState();
+  State<SocialLoginSecond> createState() => _SocialLoginSecondState();
 }
 
-class _SocialLoginState extends State<SocialLogin> {
+class _SocialLoginSecondState extends State<SocialLoginSecond> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
-    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     final AuthServices auth = AuthServices();
 
     void pageRoute() {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const PersonalDetails(),
+          builder: (context) => const DashboardPage(),
         ),
       );
     }
@@ -37,19 +36,12 @@ class _SocialLoginState extends State<SocialLogin> {
             SizedBox(
               height: sizeVertical * 5,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Social",
+                Text(
+                  "Wedding Planner",
                   style: TextStyle(color: kPinkColor, fontSize: 40),
-                ),
-                SizedBox(
-                  width: sizeHorizontal * 4,
-                ),
-                const Text(
-                  "Login",
-                  style: TextStyle(color: kPrimaryBlack, fontSize: 40),
                 ),
               ],
             ),
@@ -91,9 +83,16 @@ class _SocialLoginState extends State<SocialLogin> {
             // scocisl  log in
 
             SizedBox(
-              height: sizeVertical * 8,
+              height: sizeVertical * 2,
             ),
-
+            Image(
+              image: const AssetImage('assets/Kissing.gif'),
+              height:
+                  sizeVertical * 35, // Replace with the actual path to your GIF
+            ),
+            SizedBox(
+              height: sizeVertical * 2,
+            ),
             // google
 
             Column(
@@ -117,7 +116,7 @@ class _SocialLoginState extends State<SocialLogin> {
                 ),
 
                 SizedBox(
-                  height: sizeVertical * 8,
+                  height: sizeVertical * 3,
                 ),
 
                 // facebook
@@ -130,7 +129,7 @@ class _SocialLoginState extends State<SocialLogin> {
                 ),
 
                 SizedBox(
-                  height: sizeVertical * 8,
+                  height: sizeVertical * 3,
                 ),
 
                 // Apple
