@@ -1,16 +1,35 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import '../providers/user_details_provider.dart';
+import 'package:provider/provider.dart';
+import '../models/db_user_model.dart';
 
-class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CoupleAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CoupleAppBar({super.key});
 
   @override
+  State<CoupleAppBar> createState() => _CoupleAppBarState();
+
+  @override
+  Size get preferredSize => const Size(
+        double.maxFinite,
+        100,
+      );
+}
+
+class _CoupleAppBarState extends State<CoupleAppBar> {
+  @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    final firstName = user?.displayName?.split(' ')[0];
-    final profilePictureUrl = user?.photoURL;
+    UserData? userData = Provider.of<UserDetailsProvider>(context).userData;
     const userProfile = 'assets/icons/man.png';
-    // if(firstName==null){}
+
+    User? auth = FirebaseAuth.instance.currentUser;
+
+    String? firstName = userData?.yourName;
+    String? partnerName = userData?.partnerName;
+    String? yourprofilePictureUrl = auth?.photoURL;
+
+    // print("PhotoURL NEW : " + yourprofilePictureUrl.toString());
 
     return Container(
       width: double.infinity,
@@ -38,12 +57,11 @@ class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 50, // Adjust the width as needed
                   height: 50, // Adjust the height as needed
                   child: ClipOval(
-                    child: profilePictureUrl != null
+                    child: yourprofilePictureUrl != null
                         ? Image.network(
-                            profilePictureUrl,
+                            yourprofilePictureUrl,
                             width: 50,
                             height: 50,
-                            fit: BoxFit.cover,
                           )
                         : Image.asset(
                             userProfile,
@@ -89,11 +107,13 @@ class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("Anne",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    )),
+                Text(
+                  partnerName ?? "Partner Name",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),
@@ -101,10 +121,4 @@ class CoupleAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size(
-        double.maxFinite,
-        100,
-      );
 }

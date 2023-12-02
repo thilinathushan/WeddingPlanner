@@ -3,11 +3,10 @@ import '../app_style.dart';
 
 class OnboardingNavButton extends StatelessWidget {
   const OnboardingNavButton(
-      {Key? key,
+      {super.key,
       required this.name,
       required this.onPressed,
-      required this.buttonColor})
-      : super(key: key);
+      required this.buttonColor});
 
   final String name;
   final VoidCallback onPressed;

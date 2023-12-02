@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:planner/pages/onboard_details/wedding_details.dart';
-import 'package:planner/widgets/input_task.dart';
+import 'wedding_details.dart';
+import '../../widgets/input_task.dart';
+import '../../services/user_save.dart';
 import '../../size_config.dart';
 import '../../app_style.dart';
 
@@ -16,10 +18,25 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   final TextEditingController partnerNameController = TextEditingController();
 
   @override
+  void dispose() {
+    yourNameController.dispose();
+    partnerNameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+
+    void savePersonalDetails() {
+      final UserSave userSave = UserSave();
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      userSave.updateUserPersonalData(
+          user, yourNameController, partnerNameController);
+    }
 
     return Scaffold(
       backgroundColor: kDarkWhiteColor,
@@ -91,8 +108,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   ],
                 ),
 
-                // scocisl  log in
-
                 SizedBox(
                   height: sizeVertical * 2,
                 ),
@@ -119,13 +134,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         borderRadius: BorderRadius.circular(
                             50), // Adjust border radius as needed
                       ),
-                      child: InputTask(
-                        controller: yourNameController,
-                        hintText: "Your Name",
-                        inputKeyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: InputTask(
+                          controller: yourNameController,
+                          hintText: "Your Name",
+                          inputKeyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                        ),
                       ),
                     ),
+
+                    //Partner Name
                     SizedBox(
                       height: sizeVertical * 4,
                     ),
@@ -146,11 +166,14 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         borderRadius: BorderRadius.circular(
                             50), // Adjust border radius as needed
                       ),
-                      child: InputTask(
-                        controller: partnerNameController,
-                        hintText: "Partner Name",
-                        inputKeyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.done,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: InputTask(
+                          controller: partnerNameController,
+                          hintText: "Partner Name",
+                          inputKeyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.done,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -168,6 +191,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                savePersonalDetails();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

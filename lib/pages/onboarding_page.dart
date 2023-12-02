@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:planner/pages/auth/social_login.dart';
+import 'auth/social_login.dart';
 import '../app_style.dart';
 import '../size_config.dart';
 import '../widgets/onboarding_nav_button.dart';
@@ -10,7 +10,7 @@ import '../widgets/onboarding_nav_button.dart';
 import '../models/onboarding_data.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
+  const OnboardingPage({super.key});
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();

@@ -7,16 +7,18 @@ class InputTask extends StatelessWidget {
   final String hintText;
   final String? hintImage;
   final Icon? hintIcon;
+  final int? maxLines;
 
   const InputTask({
-    Key? key,
+    super.key,
     required this.controller,
     required this.inputKeyboardType,
     this.textInputAction,
     required this.hintText,
     this.hintImage,
     this.hintIcon,
-  }) : super(key: key);
+    this.maxLines,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class InputTask extends StatelessWidget {
       keyboardType: inputKeyboardType,
       textInputAction: textInputAction,
       style: const TextStyle(fontSize: 20),
+      maxLines: maxLines,
     );
   }
 }

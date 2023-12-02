@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../services/user_save.dart';
 import '../onboard_details/personal_details.dart';
 import '../../services/auth_services.dart';
 import '../../components/auth/social_signin.dart';
@@ -13,12 +15,19 @@ class SocialLogin extends StatefulWidget {
 }
 
 class _SocialLoginState extends State<SocialLogin> {
+  BuildContext? globalContext; // Global variable to store the context
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+
     final AuthServices auth = AuthServices();
+    final fireAuth = FirebaseAuth.instance;
+
+    User? user;
+    final UserSave userSave = UserSave();
 
     void pageRoute() {
       Navigator.push(
@@ -88,7 +97,7 @@ class _SocialLoginState extends State<SocialLogin> {
               ],
             ),
 
-            // scocisl  log in
+            // scocial  log in
 
             SizedBox(
               height: sizeVertical * 8,
@@ -106,8 +115,10 @@ class _SocialLoginState extends State<SocialLogin> {
                   btnColor: Colors.white,
                   onTap: () async {
                     dynamic result = await auth.signInWithGoogle();
-                    if (result != Null) {
+                    if (result != null) {
+                      user = fireAuth.currentUser;
                       // print("Logged In: " + result.uid);
+                      userSave.storeUserData(user!);
                       pageRoute();
                     }
                     // else {

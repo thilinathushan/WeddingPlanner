@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:planner/pages/dashboard_page.dart';
+import 'package:provider/provider.dart';
+import '../../models/db_user_model.dart';
+import '../../providers/user_details_provider.dart';
+import '../../services/get_user_data.dart';
+import '../dashboard_page.dart';
+import '../../services/user_save.dart';
 import '../../size_config.dart';
 import '../../app_style.dart';
 import '../../widgets/input_task.dart';
@@ -13,13 +19,21 @@ class WeddingDetails extends StatefulWidget {
 }
 
 class _WeddingDetailsState extends State<WeddingDetails> {
+  BuildContext? globalContext; // Global variable to store the context
   final TextEditingController locationController = TextEditingController();
   final TextEditingController budgetController = TextEditingController();
+
+  @override
+  void dispose() {
+    locationController.dispose();
+    budgetController.dispose();
+    super.dispose();
+  }
 
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  void _showDateTimePicker() async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -30,15 +44,15 @@ class _WeddingDetailsState extends State<WeddingDetails> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        _selectTime(context);
       });
-      _showTime();
     }
   }
 
-  void _showTime() async {
+  Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: selectedTime,
     );
 
     if (picked != null && picked != selectedTime) {
@@ -48,11 +62,73 @@ class _WeddingDetailsState extends State<WeddingDetails> {
     }
   }
 
+  String get formattedDateTime {
+    DateTime combinedDateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
+
+    return DateFormat('yyyy-MM-dd hh:mm a').format(combinedDateTime);
+  }
+
+  void pageRoute() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DashboardPage(),
+      ),
+    );
+  }
+
+  // Function to retrieve user data from Firestore
+  void retrieveUserData(String userId) async {
+    globalContext = context; // Assign the context to the global variable
+    GetUserDetails getUserDetails = GetUserDetails(userId);
+    Map<String, dynamic>? userData = await getUserDetails.getUserData();
+
+    if (userData != null) {
+      // print("User Data: " + userData.toString());
+      // print("user data is not null");
+
+      UserData userDataModel = UserData(
+        budget: userData['Budget'] ?? '',
+        dateTime: userData['DateTime'] ?? '',
+        location: userData['Location'],
+        partnerName: userData['PartnerName'] ?? '',
+        yourName: userData['YourName'] ?? '',
+        displayName: userData['displayName'] ?? '',
+        email: userData['email'] ?? '',
+        uid: userData['uid'] ?? '',
+        yourPhotoUrl: userData['photoURL'] ?? '',
+        timeCounterPhotoURL: userData['timeCounterPhotoURL'] ?? '',
+      );
+      Provider.of<UserDetailsProvider>(globalContext!, listen: false)
+          .setUserData(userDataModel);
+
+      // print(userDataModel);
+      pageRoute();
+    } 
+    // else {
+    //   print('User data retrieval failed.');
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+
+    void saveWeddingDetails() {
+      final UserSave userSave = UserSave();
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      userSave.updateUserWeddingData(
+          user, formattedDateTime, locationController, budgetController);
+    }
 
     return Scaffold(
       backgroundColor: kDarkWhiteColor,
@@ -134,7 +210,7 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                       height: sizeVertical * 2,
                     ),
                     GestureDetector(
-                      onTap: _showDateTimePicker,
+                      onTap: () => _selectDate(context),
                       child: Container(
                         height: sizeVertical * 9, // Set the height as needed
                         width: sizeHorizontal * 80, // Set the width as needed
@@ -152,7 +228,7 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                             child: Row(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(right: 15.0),
+                                  padding: EdgeInsets.only(right: 25.0),
                                   child: Icon(
                                     Icons.calendar_month,
                                     size: 35.0,
@@ -160,7 +236,8 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                                   ),
                                 ),
                                 Text(
-                                  "${DateFormat('yyyy-MM-dd').format(selectedDate.toLocal())} ${DateFormat('h:mm a').format(DateTime(2023, 1, 1, selectedTime.hour, selectedTime.minute))}",
+                                  formattedDateTime,
+                                  // "${DateFormat('yyyy-MM-dd').format(selectedDate.toLocal())} ${DateFormat('h:mm a').format(DateTime(2023, 1, 1, selectedTime.hour, selectedTime.minute))}",
                                   style: const TextStyle(fontSize: 20),
                                 ),
                               ],
@@ -169,6 +246,8 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                         ),
                       ),
                     ),
+
+                    //Location
                     SizedBox(
                       height: sizeVertical * 3,
                     ),
@@ -191,20 +270,25 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: InputTask(
-                          controller: locationController,
-                          hintText: "Wedding Location",
-                          inputKeyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          hintIcon: const Icon(
-                            Icons.location_on_outlined,
-                            size: 35.0,
-                            color: kDarkGray,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: InputTask(
+                            controller: locationController,
+                            hintText: "Wedding Location",
+                            inputKeyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            hintIcon: const Icon(
+                              Icons.location_on_outlined,
+                              size: 35.0,
+                              color: kDarkGray,
+                            ),
+                            hintImage: null,
                           ),
-                          hintImage: null,
                         ),
                       ),
                     ),
+
+                    //Budget
                     SizedBox(
                       height: sizeVertical * 3,
                     ),
@@ -227,17 +311,20 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: InputTask(
-                          controller: budgetController,
-                          hintText: "Wedding Budget",
-                          inputKeyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.done,
-                          hintIcon: const Icon(
-                            Icons.attach_money_rounded,
-                            size: 35.0,
-                            color: kDarkGray,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: InputTask(
+                            controller: budgetController,
+                            hintText: "Wedding Budget",
+                            inputKeyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            hintIcon: const Icon(
+                              Icons.attach_money_rounded,
+                              size: 35.0,
+                              color: kDarkGray,
+                            ),
+                            hintImage: null,
                           ),
-                          hintImage: null,
                         ),
                       ),
                     ),
@@ -256,12 +343,12 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const DashboardPage(),
-                                  ),
-                                );
+                                dynamic result =
+                                    FirebaseAuth.instance.currentUser;
+                                saveWeddingDetails();
+                                if (result.uid != null) {
+                                  retrieveUserData(result.uid);
+                                }
                               },
                               child: Container(
                                 width: sizeHorizontal * 35,

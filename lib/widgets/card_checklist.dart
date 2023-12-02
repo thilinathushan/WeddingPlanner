@@ -4,12 +4,16 @@ import '/app_style.dart';
 
 class CardChecklist extends StatelessWidget {
   final String checkTitle;
+  final String taskCount;
   final Function()? onTap; // Function to handle the click event
+  final String cardCheckListImage;
 
   const CardChecklist({
     super.key,
     required this.checkTitle,
+    required this.taskCount,
     this.onTap,
+    required this.cardCheckListImage,
   });
 
   @override
@@ -42,7 +46,7 @@ class CardChecklist extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  "assets/card-images/guests-card.png",
+                  cardCheckListImage,
                   width: 120.0,
                   height: 120.0,
                 ),
@@ -64,22 +68,22 @@ class CardChecklist extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "Guest:",
+                        const Text(
+                          "Task Count",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
                         Text(
-                          "150",
-                          style: TextStyle(
+                          taskCount,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),

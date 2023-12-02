@@ -9,12 +9,11 @@ class VendorsPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 100,
-        ),
-        Text(
-          "Vendors Page",
-          style: TextStyle(fontSize: 30),
+        Center(
+          child: Text(
+            "Vendors Page",
+            style: TextStyle(fontSize: 30),
+          ),
         ),
       ],
     );

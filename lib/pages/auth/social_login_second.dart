@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../providers/user_details_provider.dart';
+import 'package:provider/provider.dart';
+import '../../models/db_user_model.dart';
+import '../../services/get_user_data.dart';
 import '../dashboard_page.dart';
 import '../../app_style.dart';
 import '../../components/auth/social_signin.dart';
@@ -13,10 +17,12 @@ class SocialLoginSecond extends StatefulWidget {
 }
 
 class _SocialLoginSecondState extends State<SocialLoginSecond> {
+  BuildContext? globalContext; // Global variable to store the context
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
+
     final AuthServices auth = AuthServices();
 
     void pageRoute() {
@@ -26,6 +32,39 @@ class _SocialLoginSecondState extends State<SocialLoginSecond> {
           builder: (context) => const DashboardPage(),
         ),
       );
+    }
+
+    // Function to retrieve user data from Firestore
+    void retrieveUserData(String userId) async {
+      globalContext = context; // Assign the context to the global variable
+      GetUserDetails getUserDetails = GetUserDetails(userId);
+      Map<String, dynamic>? userData = await getUserDetails.getUserData();
+
+      if (userData != null) {
+        // print("User Data: " + userData.toString());
+        // print("user data is not null");
+
+        UserData userDataModel = UserData(
+          budget: userData['Budget'] ?? '',
+          dateTime: userData['DateTime'] ?? '',
+          location: userData['Location'] ?? '',
+          partnerName: userData['PartnerName'] ?? '',
+          yourName: userData['YourName'] ?? '',
+          displayName: userData['displayName'] ?? '',
+          email: userData['email'] ?? '',
+          uid: userData['uid'] ?? '',
+          yourPhotoUrl: userData['photoURL'] ?? '',
+          timeCounterPhotoURL: userData['timeCounterPhotoURL'] ?? '',
+        );
+        // print(userDataModel.toString());
+        Provider.of<UserDetailsProvider>(globalContext!, listen: false)
+            .setUserData(userDataModel);
+
+        pageRoute();
+      }
+      // else {
+      //   print('User data retrieval failed.');
+      // }
     }
 
     return Scaffold(
@@ -107,12 +146,13 @@ class _SocialLoginSecondState extends State<SocialLoginSecond> {
                     btnColor: Colors.white,
                     onTap: () async {
                       dynamic result = await auth.signInWithGoogle();
-                      if (result != Null) {
-                        // print("Logged In: " + result.uid);
-                        pageRoute();
+                      if (result != null) {
+                        print("Logged In: $result.uid");
+                        retrieveUserData(result.uid);
+                        // pageRoute();
                       }
                       // else {
-                      //   print("Error in sign in");
+                      //   print("Error in sign in 2");
                       // }
                     },
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:planner/app_style.dart';
-import 'package:planner/components/app_drawer.dart';
+import '../app_style.dart';
+import '../components/app_drawer.dart';
 import 'budget_page.dart';
 import 'guest_page.dart';
 import 'home_page.dart';
@@ -74,7 +74,7 @@ class _DashboardPageState extends State<DashboardPage> {
             label: "Vendors"),
       ],
     );
-
+    
     // final bottomNavBarSize = MediaQuery.of(context).size.height - bottomNavBar.;
     return SafeArea(
       child: Scaffold(

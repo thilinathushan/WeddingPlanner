@@ -9,23 +9,10 @@ class BudgetPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 100,
-        ),
-        Text(
-          "Budget Page",
-          style: TextStyle(fontSize: 30),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            left: 10.0,
-            top: 10.0,
-            right: 10.0,
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+        Center(
+          child: Text(
+            "Budget Page",
+            style: TextStyle(fontSize: 30),
           ),
         ),
       ],

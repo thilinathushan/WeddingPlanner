@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:planner/pages/onboard_details/personal_details.dart';
+import '../pages/onboard_details/personal_details.dart';
 import '../pages/auth/social_login_second.dart';
 import '../app_style.dart';
 import '../size_config.dart';
@@ -55,7 +55,25 @@ class AppDrawer extends StatelessWidget {
                   child: ListTile(
                     leading: const Icon(Icons.person),
                     title: const Text(
-                      "U S E R",
+                      "Personal Detailss",
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PersonalDetails(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListTile(
+                    leading: const Icon(Icons.wc),
+                    title: const Text(
+                      "Wedding Detailss",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     onTap: () {
