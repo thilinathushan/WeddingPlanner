@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'show_task.dart';
@@ -18,11 +19,11 @@ class PopupChecklistPage extends StatefulWidget {
 }
 
 class _PopupChecklistPageState extends State<PopupChecklistPage> {
-  Stream<List<DocumentSnapshot>> getTasksStream(String category) {
+  Stream<List<DocumentSnapshot>> getTasksStream(User? user, String category) {
     return FirebaseFirestore.instance
         .collection('planning')
-        .doc(category)
-        .collection('tasks')
+        .doc(user!.uid)
+        .collection(category)
         .snapshots()
         .map((snapshot) => snapshot.docs);
   }
@@ -33,7 +34,7 @@ class _PopupChecklistPageState extends State<PopupChecklistPage> {
       await taskSnapshot.reference
           .update({'taskCompleted': updatedTaskCompleted});
     } catch (e) {
-      print('Error updating taskCompleted : $e');
+      // print('Error updating taskCompleted : $e');
     }
   }
 
@@ -41,7 +42,7 @@ class _PopupChecklistPageState extends State<PopupChecklistPage> {
     try {
       await taskSnapshot.reference.delete();
     } catch (e) {
-      print('Error deleting task: $e');
+      // print('Error deleting task: $e');
     }
   }
 
@@ -50,6 +51,7 @@ class _PopupChecklistPageState extends State<PopupChecklistPage> {
     SizeConfig().init(context);
     // double sizeVertical = SizeConfig.blockSizeVertical!;
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+    User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +75,7 @@ class _PopupChecklistPageState extends State<PopupChecklistPage> {
         child: const Icon(Icons.add),
       ),
       body: StreamBuilder<List<DocumentSnapshot>>(
-        stream: getTasksStream(widget.title),
+        stream: getTasksStream(user, widget.title),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

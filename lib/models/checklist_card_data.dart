@@ -2,7 +2,6 @@ class CheckListCard {
   List checklistData = [
     'Personal',
     'Legal',
-    'Budget',
     'Venue',
     'Suppliers',
     'Rings',
@@ -23,7 +22,6 @@ class CheckListCard {
   List checkListDataImgLink = [
     "assets/card-images/Personal-card.png",
     "assets/card-images/legal-card.png",
-    "assets/card-images/budget-card.png",
     "assets/card-images/venue-card.png",
     "assets/card-images/suppliers-card.png",
     "assets/card-images/rings-card.png",

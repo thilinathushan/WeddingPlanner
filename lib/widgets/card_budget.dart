@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../app_style.dart';
+import '../models/db_user_model.dart';
+import '../providers/user_details_provider.dart';
 import '../size_config.dart';
 
 class CardBudget extends StatefulWidget {
@@ -12,9 +15,14 @@ class CardBudget extends StatefulWidget {
 class _CardBudgetState extends State<CardBudget> {
   @override
   Widget build(BuildContext context) {
+    UserData? userData = Provider.of<UserDetailsProvider>(context).userData;
+
     SizeConfig().init(context);
     double screenWidth = SizeConfig.screenWidth!;
     double useableSizeVertical = SizeConfig.useableBlockSizeVertical!;
+
+    String? budget = userData!.budget;
+    String? balance = budget;
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -36,11 +44,11 @@ class _CardBudgetState extends State<CardBudget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Budget",
                     style: TextStyle(
                       color: kPrimaryBlue,
@@ -48,25 +56,25 @@ class _CardBudgetState extends State<CardBudget> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
+                      const Text(
                         "Spent:",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10.0,
                       ),
                       Text(
-                        "250,000",
-                        style: TextStyle(
+                        balance,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                         ),
@@ -76,19 +84,19 @@ class _CardBudgetState extends State<CardBudget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
+                      const Text(
                         "Remaining:",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10.0,
                       ),
                       Text(
-                        "500,000",
-                        style: TextStyle(
+                        budget,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                         ),
@@ -109,7 +117,7 @@ class _CardBudgetState extends State<CardBudget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "50%",
+                      "0%",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

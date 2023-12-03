@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:planner/services/storage_services.dart';
+import 'storage_services.dart';
 
 class UserSave {
   Future<void> storeUserData(User user) async {
@@ -107,15 +107,54 @@ class UserSave {
       try {
         await firestore
             .collection('planning')
-            .doc(categoryName)
-            .collection('tasks')
+            .doc(user!.uid)
+            .collection(categoryName)
             .add({
           'taskName': taskNameController,
           'taskDescription': taskDescriptionController,
           'taskCompleted': taskCompleted,
         });
       } catch (e) {
-        print('Error adding task: $e');
+        // print('Error adding task: $e');
+      }
+    }
+  }
+
+  //add a guest to a family
+  Future<void> addGuest(user, familyName, guestNameController,
+      guestNoteController, guestConfirmed) async {
+    if (user != null) {
+      try {
+        // Access Firestore instance
+        FirebaseFirestore firestore = FirebaseFirestore.instance;
+        await firestore
+            .collection('guests')
+            .doc(user!.uid)
+            .collection(familyName)
+            .add({
+          'guestName': guestNameController,
+          'guestNote': guestNoteController,
+          'guestConfirmed': guestConfirmed,
+        });
+      } catch (e) {
+        // print('Error adding task: $e');
+      }
+    }
+  }
+
+  //add a family
+  Future<void> addFamily(user, familyName) async {
+    if (user != null) {
+      try {
+        // Access Firestore instance
+        FirebaseFirestore firestore = FirebaseFirestore.instance;
+        await firestore
+            .collection('guests')
+            .doc(user!.uid)
+            .collection(familyName)
+            .add({});
+      } catch (e) {
+        // print('Error adding task: $e');
       }
     }
   }

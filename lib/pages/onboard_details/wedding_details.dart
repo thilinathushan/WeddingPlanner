@@ -110,7 +110,7 @@ class _WeddingDetailsState extends State<WeddingDetails> {
 
       // print(userDataModel);
       pageRoute();
-    } 
+    }
     // else {
     //   print('User data retrieval failed.');
     // }
@@ -319,7 +319,7 @@ class _WeddingDetailsState extends State<WeddingDetails> {
                             inputKeyboardType: TextInputType.number,
                             textInputAction: TextInputAction.done,
                             hintIcon: const Icon(
-                              Icons.attach_money_rounded,
+                              Icons.money,
                               size: 35.0,
                               color: kDarkGray,
                             ),

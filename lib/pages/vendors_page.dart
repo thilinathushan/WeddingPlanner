@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 
-class VendorsPage extends StatelessWidget {
+import '../models/vendor_checklist_data.dart';
+import '../widgets/card_vendor.dart';
+
+class VendorsPage extends StatefulWidget {
   const VendorsPage({super.key});
 
   @override
+  State<VendorsPage> createState() => _VendorsPageState();
+}
+
+class _VendorsPageState extends State<VendorsPage> {
+  VendorCard vendorcard = VendorCard();
+
+  @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(
-          child: Text(
-            "Vendors Page",
-            style: TextStyle(fontSize: 30),
-          ),
+        Expanded(
+          child: ListView.builder(
+              padding: const EdgeInsets.only(
+                bottom: 15.0,
+              ),
+              itemCount: vendorcard.displayNameData.length,
+              itemBuilder: (context, index) {
+                String jobName = vendorcard.jobNameData[index];
+                String price = vendorcard.priceData[index];
+                String vendorCategory = vendorcard.vendorCategory[index];
+                String vendorName = vendorcard.displayNameData[index];
+                return CardVendor(
+                  jobName: jobName,
+                  price: price,
+                  vendorCategory: vendorCategory,
+                  vendorName: vendorName,
+                );
+              }),
         ),
       ],
     );

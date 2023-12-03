@@ -17,6 +17,7 @@ const Color gBColor = Color(0xFF031888);
 const Color lightText = Color.fromARGB(255, 147, 147, 214);
 const Color highlightText = Color(0xFFEF1F75);
 const Color secoundGb = Color(0xFFDCDCDC);
+const Color appDrawerColor = Color.fromARGB(255, 245, 245, 245);
 
 final maxTitileSize = SizeConfig.blockSizeHorizontal! * 8;
 final maxSubtitileSize = SizeConfig.blockSizeHorizontal! * 4;

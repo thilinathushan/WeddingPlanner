@@ -147,7 +147,7 @@ class _SocialLoginSecondState extends State<SocialLoginSecond> {
                     onTap: () async {
                       dynamic result = await auth.signInWithGoogle();
                       if (result != null) {
-                        print("Logged In: $result.uid");
+                        // print("Logged In: $result.uid");
                         retrieveUserData(result.uid);
                         // pageRoute();
                       }

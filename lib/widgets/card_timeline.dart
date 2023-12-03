@@ -27,8 +27,8 @@ class _CardTimeLineState extends State<CardTimeLine> {
     setState(() {
       selectedImage = File(returnImage.path);
     });
-    print('${returnImage.path}');
-    print("selected file : $selectedImage");
+    // print('${returnImage.path}');
+    // print("selected file : $selectedImage");
   }
 
   @override
@@ -39,12 +39,13 @@ class _CardTimeLineState extends State<CardTimeLine> {
     double screenWidth = SizeConfig.screenWidth!;
     double useableSizeVertical = SizeConfig.useableBlockSizeVertical!;
 
-    print("useableSizeVerticle $useableSizeVertical");
+    // print("useableSizeVerticle $useableSizeVertical");
 
     String countDownTime = userData!.dateTime;
     String yourName = userData.yourName;
     String partnerName = userData.partnerName;
     String? timeCounterPhotoURL = userData.timeCounterPhotoURL;
+    // print("TIMECOUNTER URL: $timeCounterPhotoURL");
 
 // Extract date and time components
     List<String> dateTimeComponents = countDownTime.split(' ');
@@ -69,7 +70,7 @@ class _CardTimeLineState extends State<CardTimeLine> {
 
     void saveTimeCounterPhoto() {
       final UserSave userSave = UserSave();
-      print("Selected : $selectedImage");
+      // print("Selected : $selectedImage");
       userSave.storageTimeCounterPhoto(user, selectedImage);
     }
 
@@ -145,7 +146,7 @@ class _CardTimeLineState extends State<CardTimeLine> {
                     if (timeCounterPhotoURL != null &&
                         timeCounterPhotoURL.isNotEmpty)
                       CircleAvatar(
-                        radius: useableSizeVertical * 7.5,
+                        radius: useableSizeVertical * 7,
                         backgroundColor: Colors.blue,
                         backgroundImage: NetworkImage(timeCounterPhotoURL),
                       )

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/popup_checklist_page.dart';
@@ -14,24 +15,24 @@ class PlanningPage extends StatefulWidget {
 class _PlanningPageState extends State<PlanningPage> {
   CheckListCard carddata = CheckListCard();
 
-  Stream<int> getTaskCountStream(String category) {
+  Stream<int> getTaskCountStream(User user, String category) {
     return FirebaseFirestore.instance
         .collection('planning')
-        .doc(category)
-        .collection('tasks')
+        .doc(user.uid) // Use the user's UID here
+        .collection(category) // Use the category here
         .snapshots()
         .map((snapshot) => snapshot.docs.length);
   }
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(
-                top: 15.0,
                 bottom: 15.0,
               ),
               itemCount: carddata.checklistData.length,
@@ -41,24 +42,33 @@ class _PlanningPageState extends State<PlanningPage> {
                     carddata.checkListDataImgLink[index];
 
                 return StreamBuilder<int>(
-                  stream: getTaskCountStream(category),
+                  key: UniqueKey(), // Add this line
+                  stream: getTaskCountStream(user!, category),
                   builder: (context, snapshot) {
-                    int taskCount = snapshot.data ?? 0;
+                    // if (snapshot.connectionState == ConnectionState.waiting &&
+                    ///     /!snapshot.hasData) {
+                    //   return const Center(child: CircularProgressIndicator());
+                    // } else
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      int taskCount = snapshot.data ?? 0;
 
-                    return CardChecklist(
-                      checkTitle: category,
-                      cardCheckListImage: cardCheckListImage,
-                      taskCount: taskCount.toString(),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                PopupChecklistPage(title: category),
-                          ),
-                        );
-                      },
-                    );
+                      return CardChecklist(
+                        checkTitle: category,
+                        cardCheckListImage: cardCheckListImage,
+                        taskCount: taskCount.toString(),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PopupChecklistPage(title: category),
+                            ),
+                          );
+                        },
+                      );
+                    }
                   },
                 );
               },

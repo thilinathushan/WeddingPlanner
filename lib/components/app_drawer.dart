@@ -3,7 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../pages/onboard_details/personal_details.dart';
+import '../pages/dashboard_page.dart';
+import '../pages/edit_personal_details.dart';
+import '../pages/edit_wedding_details.dart';
 import '../pages/auth/social_login_second.dart';
 import '../app_style.dart';
 import '../size_config.dart';
@@ -26,28 +28,32 @@ class AppDrawer extends StatelessWidget {
     return SizedBox(
       width: appDrawerSize,
       child: Drawer(
-        backgroundColor: kDarkWhiteColor,
+        backgroundColor: appDrawerColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                const DrawerHeader(
-                  margin: EdgeInsets.only(top: 10.0),
-                  child: Text(
-                    "W E D D I N G  P L A N N E R",
-                    style: TextStyle(fontSize: 20.0),
-                  ),
+                DrawerHeader(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: Image.asset("assets/logo.png"),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: ListTile(
                     leading: const Icon(Icons.home),
                     title: const Text(
-                      "H O M E",
+                      "Home",
                       style: TextStyle(fontSize: 15.0),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DashboardPage(),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Padding(
@@ -55,14 +61,14 @@ class AppDrawer extends StatelessWidget {
                   child: ListTile(
                     leading: const Icon(Icons.person),
                     title: const Text(
-                      "Personal Detailss",
+                      "Personal Details",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PersonalDetails(),
+                          builder: (context) => const EditPersonalDetails(),
                         ),
                       );
                     },
@@ -73,14 +79,14 @@ class AppDrawer extends StatelessWidget {
                   child: ListTile(
                     leading: const Icon(Icons.wc),
                     title: const Text(
-                      "Wedding Detailss",
+                      "Wedding Details",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PersonalDetails(),
+                          builder: (context) => const EditWeddingDetails(),
                         ),
                       );
                     },
@@ -94,9 +100,9 @@ class AppDrawer extends StatelessWidget {
                 bottom: 10.0,
               ),
               child: ListTile(
-                leading: const Icon(Icons.person),
+                leading: const Icon(Icons.logout_rounded),
                 title: const Text(
-                  "L O G O U T",
+                  "SignOut",
                   style: TextStyle(fontSize: 15.0),
                 ),
                 onTap: () {

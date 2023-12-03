@@ -32,7 +32,7 @@ class _AddTaskState extends State<AddTask> {
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
 
     String categoryName = widget.title;
-    print(categoryName);
+    // print(categoryName);
 
     void saveTasks() {
       final UserSave userSave = UserSave();
