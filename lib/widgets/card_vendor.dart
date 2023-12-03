@@ -34,7 +34,7 @@ class CardVendor extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         width: sizeHorizontal * 90, // Set the width as needed
         decoration: BoxDecoration(
-          color: Colors.white, // Background color
+          color: kPrimaryGray, // Background color
           borderRadius:
               BorderRadius.circular(25), // Adjust border radius as needed
         ),
@@ -78,7 +78,7 @@ class CardVendor extends StatelessWidget {
                   Text(
                     vendorCategory,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 15,
                     ),
                   ),
                   const SizedBox(
@@ -101,7 +101,7 @@ class CardVendor extends StatelessWidget {
                     ),
                   ]),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

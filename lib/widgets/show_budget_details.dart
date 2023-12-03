@@ -25,7 +25,7 @@ class ShowBudgetDetails extends StatelessWidget {
       width: sizeHorizontal * 90, // Set the width as needed
       height: sizeVertical * 15,
       decoration: BoxDecoration(
-        color: Colors.white, // Background color
+        color: kPrimaryGray, // Background color
         borderRadius:
             BorderRadius.circular(25), // Adjust border radius as needed
       ),
@@ -54,7 +54,7 @@ class ShowBudgetDetails extends StatelessWidget {
                   ],
                 ),
                 VerticalDivider(
-                  color: Colors.grey[350],
+                  color: Colors.grey[600],
                   thickness: 2,
                 ),
                 Column(
